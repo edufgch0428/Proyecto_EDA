@@ -11,7 +11,7 @@ package com.mycompany.proyecto_eda;
 public class Menu {
     public void mostrarMenu(){
         System.out.println("========== MENU ==========");
-        System.out.println("1. (NOMBRE DE COLISION) sort");
+        System.out.println("1. Quick sort de Playtime");
         System.out.println("2. (NOMBRE DE COLISION) sort");
         System.out.println("3. Colision - Sondeo Cuadratico");
         System.out.println("4. Salir");

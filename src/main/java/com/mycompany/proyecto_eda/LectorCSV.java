@@ -9,6 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.*;
+
 
 /**
  *
@@ -46,5 +50,37 @@ public class LectorCSV {
             
         }
         return ids;
+        
     }
+    
+    public List<Juego> leerJuegosPlaytime() throws IOException {
+
+    List<Juego> juegos = new ArrayList<>();
+
+    try (BufferedReader br = new BufferedReader(
+        new InputStreamReader(new FileInputStream(rutaArchivo), "UTF-8"))) {
+        
+        br.readLine();
+        String linea;
+
+        while ((linea = br.readLine()) != null) {
+
+            if (linea.isBlank()) continue;
+
+            try {
+                String[] datos = linea.split(",");
+
+                String nombre = datos[2].trim();
+                double playtime = Double.parseDouble(datos[10].trim());
+
+                juegos.add(new Juego(nombre, playtime));
+
+            } catch (Exception e) {
+                continue;
+            }
+        }
+    }
+
+    return juegos;
+}
 }

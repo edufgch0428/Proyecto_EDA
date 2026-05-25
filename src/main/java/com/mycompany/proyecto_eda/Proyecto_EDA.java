@@ -40,8 +40,39 @@ public class Proyecto_EDA {
 
        switch(opcion){
             case 1: 
-                System.out.println("En mantenimiento.");
-                break;
+  try {
+
+    List<Juego> juegos = lector.leerJuegosPlaytime();
+
+    Estadisticas.mostrarMilDatos(
+            juegos,
+            "1000 DATOS ANTES DE APLICAR QUICK SORT"
+    );
+
+    QuickSort.mostrarExplicacion();
+
+    long inicio = System.currentTimeMillis();
+
+    QuickSort.ordenarPorPlaytime(juegos);
+
+    long fin = System.currentTimeMillis();
+
+    Estadisticas.mostrarMilDatos(
+            juegos,
+            "1000 DATOS DESPUES DE APLICAR QUICK SORT"
+    );
+
+    Estadisticas.mostrarTop20(juegos);
+
+    System.out.println("Tiempo de ordenamiento QuickSort: "
+            + (fin - inicio) + " ms");
+
+} catch (IOException e) {
+
+    System.out.println("Error al leer el archivo: "
+            + e.getMessage());
+}
+    break;
             case 2:
                 System.out.println("En mantenimiento");
                 break;

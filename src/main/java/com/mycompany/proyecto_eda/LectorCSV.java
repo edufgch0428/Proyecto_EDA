@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,7 @@ public class LectorCSV {
     private final String rutaArchivo; // Ruta del archivo CSV
     private ArrayList<Integer>   ids    = new ArrayList<>(); // Lista de IDs para el hashing
     private ArrayList<String[]>  juegos = new ArrayList<>(); // Lista de [name, owned] para el analisis
+    private ArrayList<Juego> juegosPlaytime = new ArrayList<>(); // Lista de objetos Juego con nombre y playtime para QuickSort y Estadisticas
  
     public LectorCSV(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
@@ -42,6 +44,9 @@ public class LectorCSV {
                     String[] campos = linea.split(","); // metodo split divide el texto en partes usando la coma como separador
                     ids.add(Integer.valueOf(campos[0].trim()));                          // Extrae el ID columna 0 y lo añade
                     juegos.add(new String[]{campos[2].trim(), campos[campos.length - 5].trim()});      // Extrae nombre (col 2) y owned (col 22)
+                    // Crea un objeto Juego con el nombre y el playtime
+                    // Agrega a la lista para usarla en QuickSort y Estadisticas
+                    juegosPlaytime.add(new Juego(campos[2].trim(), Double.parseDouble(campos[campos.length - 3].trim())));
                 } catch (Exception e) {
                     // Fila con formato invalido, se omite y continua con la siguiente
                     continue;
@@ -55,5 +60,8 @@ public class LectorCSV {
  
     //Retorna la lista de [name, owned] para el analisis estadistico.
     public ArrayList<String[]> getJuegos() { return juegos; }
+    
+    // Retorna la lista de objetos Juego con nombre y playtime para QuickSort y Estadisticas
+    public ArrayList<Juego> getJuegosPlaytime() { return juegosPlaytime; }
 } 
     

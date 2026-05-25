@@ -30,6 +30,7 @@ public class Proyecto_EDA {
     // Obtener los datos leidos del CSV
     ArrayList<Integer>  ids    = lector.getIds();
     ArrayList<String[]> juegos = lector.getJuegos();
+    ArrayList<Juego>    juegosPlaytime  = lector.getJuegosPlaytime();  // Lista de objetos Juego con nombre y playtime
     System.out.printf("IDs cargados: %,d%n%n", ids.size());
     
     // Sondeo Cuadratico
@@ -37,6 +38,7 @@ public class Proyecto_EDA {
     for (int id : ids) {
        sq.insertar(id);
     }
+    
     int opcion;
     do {
        menu.mostrarMenu(); // mostrar menú en cada vuelta
@@ -44,7 +46,24 @@ public class Proyecto_EDA {
 
        switch(opcion){
             case 1: 
-                System.out.println("En mantenimiento.");
+                //Se renombra a juegosOrdenados para evitar conflicto con la variable
+                //Se elimina el try-catch debido a que leerJuegosPlayTime ya se encuentra en el try-catch del LectorCSV
+                // Se usa una copia para no modificar la lista original al ordenar
+                List<Juego> juegosOrdenados = new ArrayList<>(juegosPlaytime);
+                Estadisticas.mostrarMilDatos(
+                    juegosOrdenados,
+                    "1000 DATOS ANTES DE APLICAR QUICK SORT"
+            );
+
+                QuickSort.mostrarExplicacion();
+                long inicio = System.currentTimeMillis();
+                QuickSort.ordenarPorPlaytime(juegosOrdenados);
+                long fin = System.currentTimeMillis();
+
+                Estadisticas.mostrarMilDatos(
+                    juegosOrdenados,
+                    "1000 DATOS DESPUES DE APLICAR QUICK SORT"
+            );
                 break;
             case 2:
                 System.out.println("En mantenimiento");
@@ -56,7 +75,13 @@ public class Proyecto_EDA {
                 AnalisisEstadistico.top10Juegos(juegos);
                 break;
             case 5:
-                System.out.println("En mantenimiento");
+                // Obtiene la lista de juegos con su playtime desde el lector
+                // Se usa una copia para no modificar la lista original al ordenar
+                List<Juego> juegosTop = new ArrayList<>(juegosPlaytime);
+                // Ordena la lista de menor a mayor playtime usando QuickSort
+                QuickSort.ordenarPorPlaytime(juegosTop);
+                // Muestra los 20 juegos con mayor playtime
+                Estadisticas.mostrarTop20(juegosTop);
                 break;
             case 6:
                 System.out.println("En mantenimiento");

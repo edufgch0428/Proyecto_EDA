@@ -5,6 +5,7 @@
 package com.mycompany.proyecto_eda;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,15 +19,18 @@ public class Proyecto_EDA {
     Menu menu = new Menu();
     //Leer los IDs del CSV una sola vez
     LectorCSV lector = new LectorCSV("src/main/resources/game_info_100mil.csv");
-    List<Integer> ids;
     //Excepción que se encarga de verificar la lectura del archivo .csv
     try {
-        ids = lector.leerIds();
-        System.out.printf("IDs cargados: %,d%n%n", ids.size());
-    } catch (IOException e) {
+        lector.leer();
+
+        } catch (IOException e) {
         System.err.println("Error al leer el archivo: " + e.getMessage());
         return;
     }
+    // Obtener los datos leidos del CSV
+    ArrayList<Integer>  ids    = lector.getIds();
+    ArrayList<String[]> juegos = lector.getJuegos();
+    System.out.printf("IDs cargados: %,d%n%n", ids.size());
     
     // Sondeo Cuadratico
     SondeoCuadratico sq = new SondeoCuadratico();
@@ -49,11 +53,20 @@ public class Proyecto_EDA {
                 sq.imprimirReporte();
                 break;
             case 4:
+                AnalisisEstadistico.top10Juegos(juegos);
+                break;
+            case 5:
+                System.out.println("En mantenimiento");
+                break;
+            case 6:
+                System.out.println("En mantenimiento");
+                break;
+            case 7:
                 System.out.println("Saliendo del programa");
                 break;
             default:
                 System.out.println("Ingrese una opcion valida");
                 }
-            } while (opcion != 4);
+            } while (opcion != 7);
         }
 }

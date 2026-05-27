@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyecto_eda;
 import java.util.List;
 
@@ -64,6 +60,42 @@ public class Estadisticas {
 
       System.out.println("==============================================\n");
   }
+    
+    public static void mostrarMilDatosMetacritic(List<Juego> juegos, String titulo) {
+
+    System.out.println("\n==============================================");
+    System.out.println(titulo);
+    System.out.println("==============================================");
+
+    for (int i = 0; i < juegos.size() && i < 1000; i++) {
+        Juego j = juegos.get(i);
+
+        System.out.println((i + 1) + ". " + j.getNombre()
+                + " | Metacritic: " + j.getMetacritic());
+    }
+
+    System.out.println("==============================================\n");
+    }
+
+    public static void mostrarTop10Metacritic(List<Juego> juegos) {
+
+        System.out.println("\n==============================================");
+        System.out.println("     TOP 10 JUEGOS CON MAYOR METACRITIC");
+        System.out.println("==============================================");
+
+        for (int i = 0; i < 10 && i < juegos.size(); i++) {
+            Juego j = juegos.get(i);
+
+            System.out.printf("  %2d. %-40s Metacritic: %d%n",
+                    i + 1,
+                    j.getNombre(),
+                    j.getMetacritic());
+        }
+
+        System.out.println("==============================================\n");
+    }
+    
+    
 }
 
 

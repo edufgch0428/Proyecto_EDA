@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyecto_eda;
 
 import java.io.BufferedReader;
@@ -20,11 +16,33 @@ public class LectorCSV {
     private ArrayList<Integer>   ids    = new ArrayList<>(); // Lista de IDs para el hashing
     private ArrayList<String[]>  juegos = new ArrayList<>(); // Lista de [name, owned] para el analisis
     private ArrayList<Juego> juegosPlaytime = new ArrayList<>(); // Lista de objetos Juego con nombre y playtime para QuickSort y Estadisticas
- 
+    private ArrayList<Juego> juegosMetacritic = new ArrayList<>(); // Lista para guardar Metacritic y nombre para realizar merge sort
     public LectorCSV(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
- 
+    /**
+    * Parsea una línea del CSV respetando comas dentro de comillas dobles.
+    * Retorna un arreglo con cada campo separado y sin espacios extremos.
+    */
+    private String[] parsearLinea(String linea) {
+       List<String> campos = new ArrayList<>();
+       StringBuilder campo = new StringBuilder();
+       boolean dentroComillas = false;
+
+       for (char c : linea.toCharArray()) {
+           if (c == '"') {
+               dentroComillas = !dentroComillas;
+           } else if (c == ',' && !dentroComillas) {
+               campos.add(campo.toString().trim());
+               campo.setLength(0);
+           } else {
+               campo.append(c);
+           }
+       }
+       campos.add(campo.toString().trim());
+       return campos.toArray(new String[0]);
+   }
+    
     /**
      * Lee el CSV una sola vez y llena ambas listas.
      * Debe llamarse antes de usar getIds() o getJuegos().
@@ -41,12 +59,14 @@ public class LectorCSV {
                 if (linea.isBlank()) continue; // Si la linea tiene vacios o esta en blanco, continua
  
                 try {
-                    String[] campos = linea.split(","); // metodo split divide el texto en partes usando la coma como separador
+                    String[] campos = parsearLinea(linea); // metodo split divide el texto en partes usando la coma como separador
                     ids.add(Integer.valueOf(campos[0].trim()));                          // Extrae el ID columna 0 y lo añade
                     juegos.add(new String[]{campos[2].trim(), campos[campos.length - 5].trim()});      // Extrae nombre (col 2) y owned (col 22)
                     // Crea un objeto Juego con el nombre y el playtime
                     // Agrega a la lista para usarla en QuickSort y Estadisticas
                     juegosPlaytime.add(new Juego(campos[2].trim(), Double.parseDouble(campos[campos.length - 3].trim())));
+                    int metacritic = campos[3].trim().isEmpty() ? 0 : (int) Double.parseDouble(campos[3].trim());
+                    juegosMetacritic.add(new Juego(campos[2].trim(), metacritic));
                 } catch (Exception e) {
                     // Fila con formato invalido, se omite y continua con la siguiente
                     continue;
@@ -63,5 +83,7 @@ public class LectorCSV {
     
     // Retorna la lista de objetos Juego con nombre y playtime para QuickSort y Estadisticas
     public ArrayList<Juego> getJuegosPlaytime() { return juegosPlaytime; }
+    
+    public ArrayList<Juego> getJuegosMetacritic() { return juegosMetacritic; }
 } 
     

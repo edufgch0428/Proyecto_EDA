@@ -1,22 +1,23 @@
 package com.mycompany.proyecto_eda;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
- * @author paopa
+ * @author paopa, alaydv
  */
 public class Juego {
 
     private String nombre;
     private double playtime;
+    private int metacritic;
 
     public Juego(String nombre, double playtime) {
         this.nombre = nombre;
         this.playtime = playtime;
+    }
+
+    public Juego(String nombre, int metacritic) {
+        this.nombre = nombre;
+        this.metacritic = metacritic;
     }
 
     public String getNombre() {
@@ -26,4 +27,9 @@ public class Juego {
     public double getPlaytime() {
         return playtime;
     }
+
+    public int getMetacritic() {
+        return metacritic;
+    }
+    
 }

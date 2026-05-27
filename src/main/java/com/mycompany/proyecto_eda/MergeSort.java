@@ -25,11 +25,7 @@ public class MergeSort {
         int i = 0, j = 0, k = inicio;
 
         while (i < izquierda.size() && j < derecha.size()) {
-            int metaIzq = (izquierda.get(i).getMetacritic() != null) ? izquierda.get(i).getMetacritic() : 0;
-            int metaDer = (derecha.get(j).getMetacritic() != null) ? derecha.get(j).getMetacritic() : 0;
-
-            // Mayor a menor
-            if (metaIzq >= metaDer) {
+            if (izquierda.get(i).getMetacritic() >= derecha.get(j).getMetacritic()) {
                 lista.set(k++, izquierda.get(i++));
             } else {
                 lista.set(k++, derecha.get(j++));
@@ -39,4 +35,27 @@ public class MergeSort {
         while (i < izquierda.size()) lista.set(k++, izquierda.get(i++));
         while (j < derecha.size()) lista.set(k++, derecha.get(j++));
     }
+    public static void mostrarExplicacion() {
+    System.out.println("\n========================================================");
+    System.out.println("               ALGORITMO: MERGE SORT                      ");
+    System.out.println("========================================================╝");
+    System.out.println("  Merge Sort aplica el principio de 'Divide y Vencerás'");
+    System.out.println("  PASOS:");
+    System.out.println("  1. DIVIDIR");
+    System.out.println("         Se divide la lista en dos mitades recursivamente");
+    System.out.println("         hasta que cada sublista tenga un solo elemento.");
+    System.out.println("         [92, 45, 78, 96] → [92,45] [78,96] → [92][45][78][96]");
+    System.out.println("  2. COMPARAR");
+    System.out.println("         Cada elemento individual se compara con su par.");
+    System.out.println("         [92][45] → ¿92 >= 45? Si → [92, 45]");
+    System.out.println("  3. MEZCLAR (MERGE)");
+    System.out.println("         Las sublistas ordenadas se fusionan comparando");
+    System.out.println("         elemento a elemento hasta reconstruir la lista.");
+    System.out.println("         [92,45] + [96,78] → [96, 92, 78, 45]");
+    System.out.println("  4. RESULTADO");
+    System.out.println("         La lista queda ordenada de MAYOR a MENOR por Metacritic.");
+    System.out.println("  MEMORIA EXTRA: O(n) — usa sublistas temporales en cada merge");
+    System.out.println("========================================================");
+    System.out.println();
+}
 }

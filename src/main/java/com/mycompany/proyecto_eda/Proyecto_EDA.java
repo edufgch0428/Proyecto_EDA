@@ -27,6 +27,8 @@ public class Proyecto_EDA {
     ArrayList<Integer>  ids    = lector.getIds();
     ArrayList<String[]> juegos = lector.getJuegos();
     ArrayList<Juego>    juegosPlaytime  = lector.getJuegosPlaytime();  // Lista de objetos Juego con nombre y playtime
+    ArrayList<Juego>    juegosMetacritic  = lector.getJuegosMetacritic();  // Lista de objetos Juego con nombre y metacritic
+    
     System.out.printf("IDs cargados: %,d%n%n", ids.size());
     
     // Sondeo Cuadratico
@@ -62,7 +64,25 @@ public class Proyecto_EDA {
             );
                 break;
             case 2:
-                System.out.println("En mantenimiento");
+                List<Juego> juegosMetacriticOrdenados = new ArrayList<>(juegosMetacritic);
+
+                Estadisticas.mostrarMilDatosMetacritic(
+                    juegosMetacriticOrdenados,
+                    "1000 DATOS ANTES DE APLICAR MERGE SORT"
+                );
+
+                MergeSort.mostrarExplicacion();
+
+                long inicioMerge = System.currentTimeMillis();
+                MergeSort.sort((ArrayList<Juego>) juegosMetacriticOrdenados, 0, juegosMetacriticOrdenados.size() - 1);
+                long finMerge = System.currentTimeMillis();
+
+                Estadisticas.mostrarMilDatosMetacritic(
+                    juegosMetacriticOrdenados,
+                    "1000 DATOS DESPUES DE APLICAR MERGE SORT"
+                );
+
+                System.out.println("Tiempo de ordenamiento: " + (finMerge - inicioMerge) + " ms");
                 break;
             case 3:
                 sq.imprimirReporte();
@@ -80,7 +100,9 @@ public class Proyecto_EDA {
                 Estadisticas.mostrarTop20(juegosTop);
                 break;
             case 6:
-                System.out.println("En mantenimiento");
+                List<Juego> juegosTopCritic = new ArrayList<>(juegosMetacritic);
+                MergeSort.sort((ArrayList<Juego>) juegosTopCritic, 0, juegosTopCritic.size() - 1);
+                Estadisticas.mostrarTop10Metacritic(juegosTopCritic);
                 break;
             case 7:
                 System.out.println("Saliendo del programa");

@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyecto_eda;
 
+import java.util.Arrays;
+
 /**
  *
  * @author mateo
@@ -35,7 +37,7 @@ public class SondeoCuadratico {
         //Recorre hasta 5 veces al existir colision
         for(int i = 0; i < max_intentos;i++){
             int pos = h2(id, i);
-            
+            //If que va haciendo el conteo de insertados y colisiones, en cojunto de llenar la tabla
             if(tabla[pos] == null){
                 tabla[pos] = String.valueOf(id);
                 insertados++;
@@ -46,11 +48,22 @@ public class SondeoCuadratico {
         }
         if(!insertado) overflow++;
     }
+    public String [] imprimirMilPrimeros(){
+        System.out.println("====== 1000 PRIMEROS ID´S ORDENADOS ======");
+        for(int i = 0; i < 1001; i++){
+            if(tabla[i] != null){
+                System.out.println("Posicion -> " + i + ", ID: " + tabla[i]);
+            }
+        }
+        return tabla;
+    }
+    
     public void imprimirReporte() {
         System.out.println("============================================");
         System.out.println("       REPORTE - SONDEO CUADRATICO         ");
         System.out.println("============================================");
         System.out.printf("Tamanio de tabla (M)  : %,d%n",  M);
+        System.out.printf("1000 primeros digitos ingresados \n", Arrays.toString(imprimirMilPrimeros()));
         System.out.printf("Elementos insertados  : %,d%n",  insertados);
         System.out.printf("Elementos en overflow : %,d%n",  overflow);
         System.out.printf("Colisiones totales    : %,d%n",  colisiones);

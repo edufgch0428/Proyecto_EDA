@@ -67,7 +67,7 @@ public class Estadisticas {
     System.out.println(titulo);
     System.out.println("==============================================");
 
-    for (int i = 0; i < juegos.size() && i < 1000; i++) {
+    for (int i = 0; i < juegos.size() && i < 100000; i++) {
         Juego j = juegos.get(i);
 
         System.out.println((i + 1) + ". " + j.getNombre()
@@ -77,13 +77,13 @@ public class Estadisticas {
     System.out.println("==============================================\n");
     }
 
-    public static void mostrarTop10Metacritic(List<Juego> juegos) {
+    public static void mostrarTop20Metacritic(List<Juego> juegos) {
 
         System.out.println("\n==============================================");
-        System.out.println("     TOP 10 JUEGOS CON MAYOR METACRITIC");
+        System.out.println("     TOP 20 JUEGOS CON MAYOR METACRITIC");
         System.out.println("==============================================");
 
-        for (int i = 0; i < 10 && i < juegos.size(); i++) {
+        for (int i = 0; i < 20 && i < juegos.size(); i++) {
             Juego j = juegos.get(i);
 
             System.out.printf("  %2d. %-40s Metacritic: %d%n",

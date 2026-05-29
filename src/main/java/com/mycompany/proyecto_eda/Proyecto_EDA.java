@@ -100,9 +100,13 @@ public class Proyecto_EDA {
                 Estadisticas.mostrarTop20(juegosTop);
                 break;
             case 6:
+                // Obtiene la lista de juegos con su metacritic desde el lector
+                // Se usa una copia para no modificar la lista original al ordenar
                 List<Juego> juegosTopCritic = new ArrayList<>(juegosMetacritic);
+                // Ordena la lista de mayor a menor
                 MergeSort.sort((ArrayList<Juego>) juegosTopCritic, 0, juegosTopCritic.size() - 1);
-                Estadisticas.mostrarTop10Metacritic(juegosTopCritic);
+                // Muestra los 20 juegos con mayor metacritic
+                Estadisticas.mostrarTop20Metacritic(juegosTopCritic);
                 break;
             case 7:
                 System.out.println("Saliendo del programa");

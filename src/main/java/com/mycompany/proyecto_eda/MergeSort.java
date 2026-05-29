@@ -30,6 +30,7 @@ public class MergeSort {
 
         // Comparar elemento a elemento y colocar el mayor primero
         while (i < izquierda.size() && j < derecha.size()) {
+            //De mayor a menor:
             if (izquierda.get(i).getMetacritic() >= derecha.get(j).getMetacritic()) {
                 lista.set(k++, izquierda.get(i++));// El de la izquierda es mayor o igual
             } else {

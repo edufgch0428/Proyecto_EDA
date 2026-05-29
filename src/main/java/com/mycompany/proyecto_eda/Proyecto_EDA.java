@@ -48,9 +48,9 @@ public class Proyecto_EDA {
                 //Se elimina el try-catch debido a que leerJuegosPlayTime ya se encuentra en el try-catch del LectorCSV
                 // Se usa una copia para no modificar la lista original al ordenar
                 List<Juego> juegosOrdenados = new ArrayList<>(juegosPlaytime);
-                Estadisticas.mostrarMilDatos(
+                Estadisticas.mostrarCienMilDatos(
                     juegosOrdenados,
-                    "1000 DATOS ANTES DE APLICAR QUICK SORT"
+                    "100000 DATOS ANTES DE APLICAR QUICK SORT"
             );
 
                 QuickSort.mostrarExplicacion();
@@ -58,9 +58,9 @@ public class Proyecto_EDA {
                 QuickSort.ordenarPorPlaytime(juegosOrdenados);
                 long fin = System.currentTimeMillis();
 
-                Estadisticas.mostrarMilDatos(
+                Estadisticas.mostrarCienMilDatos(
                     juegosOrdenados,
-                    "1000 DATOS DESPUES DE APLICAR QUICK SORT"
+                    "100000 DATOS DESPUES DE APLICAR QUICK SORT"
             );
                 break;
             case 2:
@@ -68,7 +68,7 @@ public class Proyecto_EDA {
 
                 Estadisticas.mostrarMilDatosMetacritic(
                     juegosMetacriticOrdenados,
-                    "1000 DATOS ANTES DE APLICAR MERGE SORT"
+                    "100000 DATOS ANTES DE APLICAR MERGE SORT"
                 );
 
                 MergeSort.mostrarExplicacion();
@@ -79,7 +79,7 @@ public class Proyecto_EDA {
 
                 Estadisticas.mostrarMilDatosMetacritic(
                     juegosMetacriticOrdenados,
-                    "1000 DATOS DESPUES DE APLICAR MERGE SORT"
+                    "100000 DATOS DESPUES DE APLICAR MERGE SORT"
                 );
 
                 System.out.println("Tiempo de ordenamiento: " + (finMerge - inicioMerge) + " ms");

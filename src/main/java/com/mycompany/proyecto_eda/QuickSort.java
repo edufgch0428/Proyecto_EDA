@@ -70,12 +70,12 @@ public static void ordenarPorPlaytime(List<Juego> juegos) {
     System.out.println("Pasos principales:");
     System.out.println("1. Se selecciona un pivote, en este caso el dato del medio.");
     System.out.println("2. Se comparan los juegos segun su playtime.");
-    System.out.println("3. Los juegos con mayor playtime se colocan a la izquierda.");
-    System.out.println("4. Los juegos con menor playtime se colocan a la derecha.");
+    System.out.println("3. Los juegos con menor playtime se colocan a la izquierda.");
+    System.out.println("4. Los juegos con mayor playtime se colocan a la derecha.");
     System.out.println("5. Luego se repite el proceso en cada mitad de la lista.");
-    System.out.println("6. Al final, toda la lista queda ordenada de mayor a menor playtime.");
+    System.out.println("6. Al final, toda la lista queda ordenada de menor a mayor playtime.");
     System.out.println();
-    System.out.println("Nota: Se muestran solo los resultados principales para no saturar la consola.");
+    System.out.println("Nota: Se imprimen todos los datos cargados en la lista.");
     System.out.println("==============================================\n");
 }
 }

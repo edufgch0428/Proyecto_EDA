@@ -45,13 +45,13 @@ public class Estadisticas {
         }
     }
     
-    public static void mostrarMilDatos(List<Juego> juegos, String titulo) {
+    public static void mostrarCienMilDatos(List<Juego> juegos, String titulo) {
 
       System.out.println("\n==============================================");
       System.out.println(titulo);
       System.out.println("==============================================");
 
-      for (int i = 0; i < juegos.size() && i < 1000; i++) {
+      for (int i = 0; i < juegos.size() && i < 100000; i++) {
           Juego j = juegos.get(i);
 
           System.out.println((i + 1) + ". " + j.getNombre()

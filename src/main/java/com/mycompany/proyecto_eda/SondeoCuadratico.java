@@ -4,70 +4,82 @@
  */
 package com.mycompany.proyecto_eda;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  *
  * @author mateo
  */
 public class SondeoCuadratico {
-    private static final int M = 40009; //Numero de celdas donde se guardarán los ids
-    private static final int max_intentos = 5; //Limite de iteraciones al existir colisiones
-    
-    private String[] tabla = new String[M]; //Array donde se guardará los ids
-    private int insertados = 0;  //Variable que guardara el numero de insertados
-    private int overflow = 0;    //Variable que guardara el numero de ids que se quedaran afuera
-    private int colisiones = 0;  //Variable donde se guardara el numero de colisiones 
-    //Getters para leer las variables que estan en private
-    public int getInsertados() {return insertados;}
-    public int getOverflow() { return overflow;}
-    public int getColisiones() {return colisiones;}
-   
-    //Primer hashing para convertir los ids y ubicarlos
-    static int h1(int id){
-        return id % M;
+ 
+    private static final int TAMANO_TABLA = 70003; // Numero primo escogido para la tabla hash
+    private static final int MAX_INTENTOS = 5;     // Maximo de saltos cuadraticos permitidos
+ 
+    private String[]          tabla        = new String[TAMANO_TABLA]; // Tabla hash, null = celda vacia
+    private ArrayList<Integer> noInsertados = new ArrayList<>();       // IDs que no cupieron en la tabla
+    private int insertados = 0;
+    private int colisiones = 0;
+ 
+    // Posicion inicial del elemento en la tabla
+    static int hashAuxiliar(int num) {
+        return num % TAMANO_TABLA;
     }
-    //Segundo hashing en caso de haber colision 
-    static int h2 (int id, int i){
-        return (h1(id) + i*i) % M;
+ 
+    // Posicion con sondeo cuadratico: (posInicial + salto²) % tamano
+    // salto=0 -> sin colision, salto>0 -> hubo colision
+    static int hashPrincipal(int num, int salto) {
+        return (hashAuxiliar(num) + salto * salto) % TAMANO_TABLA;
     }
-    //Metodo que insertara los id
-    public void insertar(int id){
-        boolean insertado = false; //Se pone en true cuando se inserta el dato 
-        //Recorre hasta 5 veces al existir colision
-        for(int i = 0; i < max_intentos;i++){
-            int pos = h2(id, i);
-            //If que va haciendo el conteo de insertados y colisiones, en cojunto de llenar la tabla
-            if(tabla[pos] == null){
-                tabla[pos] = String.valueOf(id);
+ 
+    // Inserta un ID aplicando sondeo cuadratico
+    public void insertar(int num) {
+        for (int salto = 0; salto < MAX_INTENTOS; salto++) {
+            int pos = hashPrincipal(num, salto);
+ 
+            if (tabla[pos] == null) {
+                tabla[pos] = String.valueOf(num);
                 insertados++;
-                insertado = true;
-                break;
-            }
-            colisiones++;
-        }
-        if(!insertado) overflow++;
-    }
-    public String [] imprimirMilPrimeros(){
-        System.out.println("====== 1000 PRIMEROS ID´S ORDENADOS ======");
-        for(int i = 0; i < 1001; i++){
-            if(tabla[i] != null){
-                System.out.println("Posicion -> " + i + ", ID: " + tabla[i]);
+                if (salto > 0) colisiones++;
+                return;
             }
         }
-        return tabla;
+        // No encontro celda libre en los 5 intentos -> guardar en lista de no insertados
+        noInsertados.add(num);
     }
-    
+ 
+    // Busca un ID en la tabla con la misma logica de sondeo
+    public boolean buscar(int num) {
+        for (int salto = 0; salto < MAX_INTENTOS; salto++) {
+            int pos = hashPrincipal(num, salto);
+            if (tabla[pos] == null) return false;
+            if (tabla[pos].equals(String.valueOf(num))) return true;
+        }
+        return false;
+    }
+ 
+    // Reporte final llamado desde el menu (case 3)
     public void imprimirReporte() {
-        System.out.println("============================================");
-        System.out.println("       REPORTE - SONDEO CUADRATICO         ");
-        System.out.println("============================================");
-        System.out.printf("Tamanio de tabla (M)  : %,d%n",  M);
-        System.out.printf("1000 primeros digitos ingresados \n", Arrays.toString(imprimirMilPrimeros()));
-        System.out.printf("Elementos insertados  : %,d%n",  insertados);
-        System.out.printf("Elementos en overflow : %,d%n",  overflow);
-        System.out.printf("Colisiones totales    : %,d%n",  colisiones);
-        System.out.println("============================================");
+        System.out.println("\n========== SONDEO CUADRATICO ==========");
+        System.out.println("Tamano de tabla:    " + TAMANO_TABLA);
+        System.out.println("IDs insertados:     " + insertados);
+        System.out.println("IDs no insertados:  " + noInsertados.size());
+        System.out.println("Colisiones:         " + colisiones);
+ 
+        // Todos los elementos insertados en la tabla
+        System.out.println("---------------------------------------");
+        System.out.println("Elementos insertados en la tabla:");
+        for (int i = 0; i < TAMANO_TABLA; i++) {
+            if (tabla[i] != null) {
+                System.out.println("  [" + i + "] = " + tabla[i]);
+            }
+        }
+ 
+        // IDs que no se pudieron insertar
+        System.out.println("---------------------------------------");
+        System.out.println("IDs que NO fueron insertados:");
+        for (int id : noInsertados) {
+            System.out.println("  " + id);
+        }
+        System.out.println("=======================================");
     }
-    
 }

@@ -65,6 +65,9 @@ public class LectorCSV {
                     // Crea un objeto Juego con el nombre y el playtime
                     // Agrega a la lista para usarla en QuickSort y Estadisticas
                     juegosPlaytime.add(new Juego(campos[2].trim(), Double.parseDouble(campos[campos.length - 3].trim())));
+                    // Si metacritic (índice 3) está vacío o es "Sin dato" se asigna 0,
+                    // de lo contrario se convierte de Double a int. Luego se agrega
+                    // un nuevo Juego con nombre y metacritic a la lista juegosMetacritic.
                     int metacritic = campos[3].trim().isEmpty() ? 0 : (int) Double.parseDouble(campos[3].trim());
                     juegosMetacritic.add(new Juego(campos[2].trim(), metacritic));
                 } catch (Exception e) {
@@ -84,6 +87,7 @@ public class LectorCSV {
     // Retorna la lista de objetos Juego con nombre y playtime para QuickSort y Estadisticas
     public ArrayList<Juego> getJuegosPlaytime() { return juegosPlaytime; }
     
+    // Retorna la lista de objetos Juego con nombre y metacritic para MergeSort y Estadisticas
     public ArrayList<Juego> getJuegosMetacritic() { return juegosMetacritic; }
 } 
     
